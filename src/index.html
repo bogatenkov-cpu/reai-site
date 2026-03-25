@@ -748,9 +748,12 @@ footer .logo { font-size: 16px; }
     <div class="section-label">Начать</div>
     <h2 class="section-title">Расскажите, что хотите автоматизировать — мы покажем, как</h2>
     <p class="section-desc">30-минутный звонок. Разберём ваши процессы и покажем, где AI даст результат уже в первый месяц.</p>
-    <form class="cta-form" id="lead-form" onsubmit="return submitLead(event)">
-      <input type="text" id="lead-contact" placeholder="Ваш email или Telegram" required>
-      <button type="submit" class="btn-primary" style="white-space: nowrap;">Обсудить задачу</button>
+    <form class="cta-form" id="lead-form" onsubmit="return submitLead(event)" style="flex-direction:column;max-width:500px;margin:0 auto;gap:12px;">
+      <input type="text" id="lead-name" placeholder="Ваше имя" required style="width:100%;">
+      <input type="text" id="lead-tg" placeholder="Telegram (@username)" required style="width:100%;">
+      <input type="tel" id="lead-phone" placeholder="Телефон" required style="width:100%;">
+      <input type="email" id="lead-email" placeholder="Email — если хотите получать полезности по AI (необязательно)" style="width:100%;">
+      <button type="submit" class="btn-primary" style="white-space:nowrap;width:100%;">Обсудить задачу</button>
     </form>
     <p class="cta-note">Или напишите напрямую: <a href="https://t.me/bogatenkov_e" style="color: var(--accent); text-decoration: none;">@bogatenkov_e</a></p>
     <p id="form-status" style="font-size: 14px; margin-top: 12px; display: none;"></p>
@@ -767,23 +770,26 @@ footer .logo { font-size: 16px; }
 <script>
 async function submitLead(e) {
   e.preventDefault();
-  const contact = document.getElementById('lead-contact').value.trim();
+  const name = document.getElementById('lead-name').value.trim();
+  const tg = document.getElementById('lead-tg').value.trim();
+  const phone = document.getElementById('lead-phone').value.trim();
+  const email = document.getElementById('lead-email').value.trim();
   const status = document.getElementById('form-status');
   const btn = e.target.querySelector('button');
-  if (!contact) return false;
+  if (!name || !tg || !phone) return false;
   btn.textContent = 'Отправка...';
   btn.disabled = true;
   try {
     const res = await fetch('/api/lead', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({contact})
+      body: JSON.stringify({name, tg, phone, email})
     });
     if (res.ok) {
       status.style.display = 'block';
       status.style.color = 'var(--accent)';
       status.textContent = 'Спасибо! Свяжемся в течение 24 часов.';
-      document.getElementById('lead-contact').value = '';
+      e.target.reset();
     } else {
       throw new Error('fail');
     }

@@ -3,9 +3,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { contact } = req.body;
-  if (!contact || !contact.trim()) {
-    return res.status(400).json({ error: 'Contact is required' });
+  const { name, tg, phone, email } = req.body;
+  if (!name || !name.trim() || !tg || !tg.trim() || !phone || !phone.trim()) {
+    return res.status(400).json({ error: 'Name, Telegram and phone are required' });
   }
 
   const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -16,7 +16,11 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server config error' });
   }
 
-  const text = `🔔 *Новая заявка RE:AI*\n\n📧 Контакт: ${contact.trim()}\n🕐 ${new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Bangkok' })}`;
+  let text = `🔔 *Новая заявка RE:AI*\n\n👤 Имя: ${name.trim()}\n💬 Telegram: ${tg.trim()}\n📞 Телефон: ${phone.trim()}`;
+  if (email && email.trim()) {
+    text += `\n📧 Email: ${email.trim()}`;
+  }
+  text += `\n🕐 ${new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Bangkok' })}`;
 
   try {
     const tgRes = await fetch(
