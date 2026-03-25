@@ -750,9 +750,9 @@ footer .logo { font-size: 16px; }
     <p class="section-desc">30-минутный звонок. Разберём ваши процессы и покажем, где AI даст результат уже в первый месяц.</p>
     <form class="cta-form" id="lead-form" onsubmit="return submitLead(event)" style="flex-direction:column;max-width:500px;margin:0 auto;gap:12px;">
       <input type="text" id="lead-name" placeholder="Ваше имя" required style="width:100%;">
-      <input type="text" id="lead-tg" placeholder="Telegram (@username)" required style="width:100%;">
-      <input type="tel" id="lead-phone" placeholder="Телефон" required style="width:100%;">
-      <input type="email" id="lead-email" placeholder="Email — если хотите получать полезности по AI (необязательно)" style="width:100%;">
+      <input type="text" id="lead-tg" placeholder="Telegram (@username)" required pattern="@.+" title="Введите username с @" style="width:100%;">
+      <input type="tel" id="lead-phone" placeholder="Телефон (+7...)" required pattern="\+\d{7,15}" title="Введите номер с + и кодом страны" style="width:100%;">
+      <input type="text" id="lead-email" placeholder="Email — необязательно (для рассылки полезностей по AI)" style="width:100%;">
       <button type="submit" class="btn-primary" style="white-space:nowrap;width:100%;">Обсудить задачу</button>
     </form>
     <p class="cta-note">Или напишите напрямую: <a href="https://t.me/bogatenkov_e" style="color: var(--accent); text-decoration: none;">@bogatenkov_e</a></p>
@@ -780,20 +780,19 @@ async function submitLead(e) {
   btn.textContent = 'Отправка...';
   btn.disabled = true;
   try {
-    const payload = {name, tg, phone, email};
     const res = await fetch('/api/lead', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload)
+      body: JSON.stringify({name, tg, phone, email})
     });
-    const data = await res.json();
-    if (res.ok && data.ok) {
-      status.style.display = 'block';
+    status.style.display = 'block';
+    if (res.ok) {
       status.style.color = 'var(--accent)';
-      status.textContent = 'Спасибо! Свяжемся в течение 24 часов.';
+      status.textContent = 'Спасибо! Мы свяжемся с вами.';
       e.target.reset();
     } else {
-      throw new Error('fail');
+      status.style.color = 'var(--accent)';
+      status.textContent = 'Что-то пошло не так. Напишите нам в Telegram: @bogatenkov_e';
     }
   } catch(err) {
     status.style.display = 'block';
