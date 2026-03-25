@@ -793,10 +793,10 @@ async function submitLead(e) {
       status.textContent = 'Спасибо! Мы свяжемся с вами.';
       form.reset();
     } else {
-      status.textContent = 'Ошибка ' + r.status + ': ' + txt;
+      status.textContent = 'Что-то пошло не так. Напишите нам в Telegram: @bogatenkov_e';
     }
   } catch(err) {
-    status.textContent = 'Fetch error: ' + err.message;
+    status.textContent = 'Что-то пошло не так. Напишите нам в Telegram: @bogatenkov_e';
   }
   btn.textContent = 'Обсудить задачу';
   btn.disabled = false;

@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server config error' });
   }
 
-  let text = `🔔 *Новая заявка RE:AI*\n\n👤 Имя: ${name.trim()}\n💬 Telegram: ${tg.trim()}\n📞 Телефон: ${phone.trim()}`;
+  let text = `🔔 Новая заявка RE:AI\n\n👤 Имя: ${name.trim()}\n💬 Telegram: ${tg.trim()}\n📞 Телефон: ${phone.trim()}`;
   if (email && email.trim()) {
     text += `\n📧 Email: ${email.trim()}`;
   }
@@ -30,8 +30,7 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           chat_id: CHAT_ID,
-          text,
-          parse_mode: 'Markdown'
+          text
         })
       }
     );
