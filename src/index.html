@@ -225,19 +225,20 @@ nav a:hover { color: var(--fg); }
 }
 
 /* TEAM */
-.team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-.team-card { display: grid; grid-template-columns: 140px 1fr; gap: 32px; align-items: start; }
-.team-photo {
-  width: 140px; height: 140px; border-radius: 8px;
-  background: var(--bg-elevated); border: 2px solid var(--border-light);
-  display: flex; align-items: center; justify-content: center; font-size: 48px;
+.team-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.team-photo-shared {
+  width: 100%; border-radius: 12px; overflow: hidden;
+  border: 2px solid var(--border-light);
 }
-.team-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+.team-photo-shared img { width: 100%; height: auto; display: block; }
+.team-members { display: flex; flex-direction: column; gap: 40px; }
+.team-member h3 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
 .team-role {
   font-family: var(--font-mono); font-size: 12px; color: var(--accent);
   text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
 }
 .team-bio { color: var(--fg-secondary); font-size: 15px; line-height: 1.7; }
+.team-divider { border: none; border-top: 1px solid var(--border); }
 
 /* PROCESS */
 .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: step; }
@@ -320,9 +321,7 @@ footer .logo { font-size: 16px; }
   .case-results { flex-direction: row; gap: 32px; }
   .case-result { text-align: left; min-width: auto; }
   .product-row, .product-row.reverse { grid-template-columns: 1fr; direction: ltr; }
-  .team-grid { grid-template-columns: 1fr; }
-  .team-card { grid-template-columns: 100px 1fr; gap: 20px; }
-  .team-photo { width: 100px; height: 100px; }
+  .team-layout { grid-template-columns: 1fr; gap: 40px; }
   .process-steps { grid-template-columns: 1fr 1fr; }
   .cta-form { flex-direction: column; }
   .blog-grid { grid-template-columns: 1fr; }
@@ -516,7 +515,35 @@ footer .logo { font-size: 16px; }
           <span class="product-feature">Алерты</span>
         </div>
       </div>
-      <div class="product-visual">[скриншот портала]</div>
+      <div class="product-visual product-mockup">
+        <div style="width:100%;padding:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <span style="font-family:var(--font-mono);font-size:13px;color:var(--accent);">DISTRESS PORTAL</span>
+            <div style="display:flex;gap:8px;">
+              <span style="background:var(--accent-dim);border:1px solid rgba(200,255,0,0.2);padding:3px 10px;font-size:10px;font-family:var(--font-mono);color:var(--fg-tertiary);">FILTERS</span>
+              <span style="background:var(--accent-dim);border:1px solid rgba(200,255,0,0.2);padding:3px 10px;font-size:10px;font-family:var(--font-mono);color:var(--fg-tertiary);">ALERTS</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+              <div><span style="font-size:13px;font-weight:600;">Villa Phuket — Банковский дистресс</span><br><span style="font-size:11px;color:var(--fg-tertiary);">THB 42M · −28% от рынка</span></div>
+              <span style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--accent);">A+</span>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+              <div><span style="font-size:13px;font-weight:600;">Condo Bangkok — Застройщик</span><br><span style="font-size:11px;color:var(--fg-tertiary);">THB 8.5M · −35% от рынка</span></div>
+              <span style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--accent);">A</span>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+              <div><span style="font-size:13px;font-weight:600;">Penthouse Samui — Частный</span><br><span style="font-size:11px;color:var(--fg-tertiary);">THB 18M · −22% от рынка</span></div>
+              <span style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:#9e9a92;">B+</span>
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:16px;">
+            <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-tertiary);">12 новых за неделю</span>
+            <span style="font-family:var(--font-mono);font-size:10px;color:var(--accent);">AI-оценка: 340 объектов</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="product-row reverse">
@@ -532,7 +559,35 @@ footer .logo { font-size: 16px; }
           <span class="product-feature">Сообщество</span>
         </div>
       </div>
-      <div class="product-visual">[скриншот курса]</div>
+      <div class="product-visual product-mockup">
+        <div style="width:100%;padding:20px;">
+          <div style="font-family:var(--font-mono);font-size:13px;color:var(--accent);margin-bottom:16px;">RE ACADEMY</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:14px 16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <span style="font-size:13px;font-weight:600;">Модуль 1: AI для продаж</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:var(--accent);">ЗАВЕРШЁН</span>
+              </div>
+              <div style="height:4px;background:var(--border);border-radius:2px;"><div style="height:100%;width:100%;background:var(--accent);border-radius:2px;"></div></div>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:14px 16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <span style="font-size:13px;font-weight:600;">Модуль 2: Промпт-инженерия</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-tertiary);">В ПРОЦЕССЕ</span>
+              </div>
+              <div style="height:4px;background:var(--border);border-radius:2px;"><div style="height:100%;width:60%;background:var(--accent);border-radius:2px;"></div></div>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:14px 16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <span style="font-size:13px;font-weight:600;">Модуль 3: AI-маркетинг</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-tertiary);">СКОРО</span>
+              </div>
+              <div style="height:4px;background:var(--border);border-radius:2px;"></div>
+            </div>
+          </div>
+          <div style="margin-top:14px;font-family:var(--font-mono);font-size:10px;color:var(--fg-tertiary);">12 уроков · 8 воркшопов · 50+ промптов</div>
+        </div>
+      </div>
     </div>
 
     <div class="product-row">
@@ -548,7 +603,37 @@ footer .logo { font-size: 16px; }
           <span class="product-feature">Авто-назначение</span>
         </div>
       </div>
-      <div class="product-visual">[скриншот SDR]</div>
+      <div class="product-visual product-mockup">
+        <div style="width:100%;padding:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <span style="font-family:var(--font-mono);font-size:13px;color:var(--accent);">AI SDR · LIVE</span>
+            <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-tertiary);">Сегодня: 14 лидов</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:12px 16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:12px;font-weight:600;">Anna K. · WhatsApp</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:var(--accent);background:var(--accent-dim);padding:2px 8px;border:1px solid rgba(200,255,0,0.2);">HOT · 92</span>
+              </div>
+              <span style="font-size:11px;color:var(--fg-tertiary);">Квалифицирован → Встреча назначена 15:30</span>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:12px 16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:12px;font-weight:600;">Mark S. · Telegram</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg);background:rgba(255,255,255,0.08);padding:2px 8px;border:1px solid var(--border);">WARM · 74</span>
+              </div>
+              <span style="font-size:11px;color:var(--fg-tertiary);">Уточняет бюджет → Ждём ответ</span>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);padding:12px 16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:12px;font-weight:600;">Li Wei · Email</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-tertiary);background:rgba(255,255,255,0.05);padding:2px 8px;border:1px solid var(--border);">NEW · —</span>
+              </div>
+              <span style="font-size:11px;color:var(--fg-tertiary);">Первый контакт · Ответ за 12 сек</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -560,21 +645,21 @@ footer .logo { font-size: 16px; }
     <h2 class="section-title">Мы не консультанты. Мы делаем это каждый день у себя</h2>
     <p class="section-desc">Два кофаундера, которые строят AI-инфраструктуру в недвижимости изнутри.</p>
 
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-photo">👤</div>
-        <div>
-          <h3>Евгений Богатенков</h3>
-          <div class="team-role">Co-founder · AI & Marketing</div>
-          <p class="team-bio">10+ лет в digital-маркетинге недвижимости. CMO международной компании на 5 рынках. Построил AI-инфраструктуру для маркетинга, продаж и аналитики: от генератора лендингов до AI-рассылок и системы промптов. Оркестратор — умеет переводить бизнес-задачи в AI-решения.</p>
-        </div>
+    <div class="team-layout">
+      <div class="team-photo-shared">
+        <img src="/images/team-photo.jpeg" alt="Кирилл Карманов и Евгений Богатенков — кофаундеры RE:AI" loading="lazy">
       </div>
-      <div class="team-card">
-        <div class="team-photo">👤</div>
-        <div>
+      <div class="team-members">
+        <div class="team-member">
           <h3>Кирилл Карманов</h3>
           <div class="team-role">Co-founder · Product & Design</div>
           <p class="team-bio">10+ лет в продуктовом UX/UI-дизайне. Серийный предприниматель: основал SwipeUp и линейку Shopify-приложений. Строит продукты на стыке дизайна и технологий — от интерфейсов AI-инструментов до платформ для работы с данными. Превращает сложные AI-решения в понятные продукты, которыми реально пользуются.</p>
+        </div>
+        <hr class="team-divider">
+        <div class="team-member">
+          <h3>Евгений Богатенков</h3>
+          <div class="team-role">Co-founder · AI & Marketing</div>
+          <p class="team-bio">10+ лет в digital-маркетинге недвижимости. CMO международной компании на 5 рынках. Построил AI-инфраструктуру для маркетинга, продаж и аналитики: от генератора лендингов до AI-рассылок и системы промптов. Оркестратор — умеет переводить бизнес-задачи в AI-решения.</p>
         </div>
       </div>
     </div>
@@ -660,11 +745,12 @@ footer .logo { font-size: 16px; }
     <div class="section-label">Начать</div>
     <h2 class="section-title">Расскажите, что хотите автоматизировать — мы покажем, как</h2>
     <p class="section-desc">30-минутный звонок. Разберём ваши процессы и покажем, где AI даст результат уже в первый месяц.</p>
-    <div class="cta-form">
-      <input type="email" placeholder="Ваш email или Telegram">
-      <button class="btn-primary" style="white-space: nowrap;">Обсудить задачу</button>
-    </div>
-    <p class="cta-note">Или напишите напрямую: @reai_consult</p>
+    <form class="cta-form" id="lead-form" onsubmit="return submitLead(event)">
+      <input type="text" id="lead-contact" placeholder="Ваш email или Telegram" required>
+      <button type="submit" class="btn-primary" style="white-space: nowrap;">Обсудить задачу</button>
+    </form>
+    <p class="cta-note">Или напишите напрямую: <a href="https://t.me/bogatenkov_e" style="color: var(--accent); text-decoration: none;">@bogatenkov_e</a></p>
+    <p id="form-status" style="font-size: 14px; margin-top: 12px; display: none;"></p>
   </div>
 </div>
 
@@ -675,5 +761,38 @@ footer .logo { font-size: 16px; }
   </div>
 </footer>
 
+<script>
+async function submitLead(e) {
+  e.preventDefault();
+  const contact = document.getElementById('lead-contact').value.trim();
+  const status = document.getElementById('form-status');
+  const btn = e.target.querySelector('button');
+  if (!contact) return false;
+  btn.textContent = 'Отправка...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('/api/lead', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({contact})
+    });
+    if (res.ok) {
+      status.style.display = 'block';
+      status.style.color = 'var(--accent)';
+      status.textContent = 'Спасибо! Свяжемся в течение 24 часов.';
+      document.getElementById('lead-contact').value = '';
+    } else {
+      throw new Error('fail');
+    }
+  } catch(err) {
+    status.style.display = 'block';
+    status.style.color = 'var(--accent)';
+    status.textContent = 'Напишите напрямую в Telegram: @bogatenkov_e';
+  }
+  btn.textContent = 'Обсудить задачу';
+  btn.disabled = false;
+  return false;
+}
+</script>
 </body>
 </html>
