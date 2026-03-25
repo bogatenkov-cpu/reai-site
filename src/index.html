@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE:AI — AI-внедрения для компаний недвижимости | Консалтинг, автоматизация, обучение</title>
+<meta name="description" content="Внедряем AI в компании недвижимости: автоматизация продаж, маркетинга и операций для девелоперов, агентств и брокеров. Реальные кейсы, готовые продукты, обучение команд.">
+<meta name="keywords" content="AI недвижимость, внедрение AI, автоматизация продаж недвижимости, AI SDR, ChatGPT для девелоперов, AI консалтинг недвижимость, автоматизация маркетинга недвижимости">
+<meta property="og:title" content="RE:AI — AI-внедрения для недвижимости">
+<meta property="og:description" content="Внедряем AI так, чтобы он приносил деньги. Консалтинг, обучение и готовые продукты для рынка недвижимости.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://reai-site.vercel.app/">
+<!-- <meta property="og:image" content="/images/og-image.png"> -->
+<!-- <link rel="icon" href="/images/favicon.ico"> -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "RE:AI",
+  "description": "AI-внедрения для компаний недвижимости",
+  "url": "https://reai-site.vercel.app",
+  "foundingDate": "2025",
+  "founder": [
+    {"@type": "Person", "name": "Евгений Богатенков", "jobTitle": "Co-founder, AI & Marketing"},
+    {"@type": "Person", "name": "Кирилл Карманов", "jobTitle": "Co-founder, Product & Design"}
+  ],
+  "areaServed": "Международный рынок недвижимости",
+  "serviceType": ["AI-консалтинг", "Автоматизация продаж", "Обучение AI", "AI SDR"]
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0c0c0c;
+  --bg: #121212;
+  --bg-raised: #181818;
+  --bg-card: #1e1e1e;
+  --bg-elevated: #252525;
+  --fg: #eeebe4;
+  --fg-secondary: #ccc8bf;
+  --fg-tertiary: #9e9a92;
+  --accent: #c8ff00;
+  --accent-dim: rgba(200,255,0,0.15);
+  --border: #2c2c2c;
+  --border-light: #353535;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  padding: 20px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  backdrop-filter: blur(20px);
+  background: rgba(12,12,12,0.88);
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-family: var(--font-mono); font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+.logo span { color: var(--accent); }
+nav a { color: var(--fg-tertiary); text-decoration: none; font-size: 14px; font-family: var(--font-mono); transition: color 0.3s; }
+nav a:hover { color: var(--fg); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-cta {
+  background: var(--accent); color: var(--bg-deep);
+  padding: 10px 24px; font-weight: 700; font-size: 13px;
+  text-transform: uppercase; letter-spacing: 1px; border: none;
+  cursor: pointer; font-family: var(--font-mono); text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(200,255,0,0.3); color: var(--bg-deep); }
+
+/* FULL-WIDTH SECTIONS */
+.full-section { width: 100%; }
+.full-section-inner { max-width: 1200px; margin: 0 auto; padding: 120px 40px; }
+.bg-deep { background: var(--bg-deep); }
+.bg-base { background: var(--bg); }
+.bg-raised { background: var(--bg-raised); }
+.bg-elevated { background: var(--bg-elevated); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  padding: 140px 40px 80px; max-width: 1200px; margin: 0 auto;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: 13px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 3px; margin-bottom: 32px;
+  opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero h1 {
+  font-family: var(--font-display); font-size: clamp(44px, 7vw, 88px);
+  line-height: 1.05; font-weight: 400; margin-bottom: 40px; max-width: 950px;
+  opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-sub {
+  font-size: 20px; color: var(--fg-secondary); max-width: 600px;
+  line-height: 1.7; margin-bottom: 48px;
+  opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+}
+.hero-actions {
+  display: flex; gap: 20px; align-items: center;
+  opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: var(--accent); color: var(--bg-deep);
+  padding: 16px 40px; font-weight: 700; font-size: 15px;
+  text-transform: uppercase; letter-spacing: 1px; border: none;
+  cursor: pointer; font-family: var(--font-mono);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none; display: inline-block;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(200,255,0,0.3); }
+.btn-secondary {
+  color: var(--fg); font-family: var(--font-mono); font-size: 14px;
+  text-decoration: none; border-bottom: 1px solid var(--border-light);
+  padding-bottom: 2px; transition: border-color 0.3s;
+}
+.btn-secondary:hover { border-color: var(--accent); }
+
+/* SECTION ELEMENTS */
+.section-label {
+  font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display); font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.1; margin-bottom: 24px; max-width: 800px;
+}
+.section-desc {
+  font-size: 18px; color: var(--fg-secondary); max-width: 640px;
+  line-height: 1.7; margin-bottom: 64px;
+}
+
+/* JTBD JOBS */
+.jobs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.job-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 40px 32px; transition: border-color 0.3s, transform 0.3s;
+  display: flex; flex-direction: column;
+}
+.job-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.job-when {
+  font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px;
+}
+.job-want { font-size: 20px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; color: var(--fg); }
+.job-so-that { color: var(--fg-secondary); font-size: 14px; line-height: 1.7; flex: 1; }
+.job-solution {
+  margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 11px; color: var(--fg);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.job-solution span { color: var(--accent); }
+
+/* CASES */
+.case-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 48px 40px; margin-bottom: 24px;
+  display: grid; grid-template-columns: 1fr auto; gap: 40px;
+  align-items: start; transition: border-color 0.3s;
+}
+.case-card:hover { border-color: var(--accent); }
+.case-card:last-child { margin-bottom: 0; }
+.case-tag {
+  font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;
+}
+.case-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; color: var(--fg); }
+.case-card p { color: var(--fg-secondary); font-size: 15px; line-height: 1.7; }
+.case-results { display: flex; flex-direction: column; gap: 24px; }
+.case-result { text-align: right; min-width: 160px; }
+.case-result .num { font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1; }
+.case-result .label { font-size: 12px; color: var(--fg-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+/* MANIFESTO */
+.manifesto-text { max-width: 700px; font-size: 22px; line-height: 1.8; color: var(--fg-secondary); }
+.manifesto-text strong { color: var(--fg); font-weight: 600; }
+.manifesto-text em { color: var(--accent); font-style: normal; }
+
+/* PRODUCTS */
+.product-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  align-items: center; margin-bottom: 80px; padding-bottom: 80px;
+  border-bottom: 1px solid var(--border);
+}
+.product-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.product-row.reverse { direction: rtl; }
+.product-row.reverse > * { direction: ltr; }
+.product-label {
+  font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px;
+}
+.product-row h3 { font-family: var(--font-display); font-size: 36px; margin-bottom: 16px; line-height: 1.2; }
+.product-job { font-size: 17px; color: var(--fg-secondary); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
+.product-row p { color: var(--fg-tertiary); font-size: 15px; line-height: 1.7; margin-bottom: 20px; }
+.product-features { display: flex; flex-wrap: wrap; gap: 8px; }
+.product-feature {
+  font-family: var(--font-mono); font-size: 11px; color: var(--fg);
+  background: var(--accent-dim); border: 1px solid rgba(200,255,0,0.25);
+  padding: 6px 14px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.product-visual {
+  background: var(--bg-elevated); border: 1px solid var(--border-light);
+  aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); color: var(--fg-tertiary); font-size: 14px;
+}
+
+/* TEAM */
+.team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.team-card { display: grid; grid-template-columns: 140px 1fr; gap: 32px; align-items: start; }
+.team-photo {
+  width: 140px; height: 140px; border-radius: 8px;
+  background: var(--bg-elevated); border: 2px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center; font-size: 48px;
+}
+.team-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+.team-role {
+  font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+}
+.team-bio { color: var(--fg-secondary); font-size: 15px; line-height: 1.7; }
+
+/* PROCESS */
+.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: step; }
+.process-step {
+  position: relative; padding: 32px 24px;
+  background: var(--bg-card); border: 1px solid var(--border); counter-increment: step;
+}
+.process-step::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--font-mono); font-size: 48px; font-weight: 700;
+  color: rgba(200,255,0,0.15); display: block; margin-bottom: 16px;
+}
+.process-step h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; color: var(--fg); }
+.process-step p { color: var(--fg-secondary); font-size: 13px; line-height: 1.6; }
+
+/* CTA */
+.cta-inner { text-align: center; }
+.cta-inner .section-title { max-width: 700px; margin: 0 auto 24px; }
+.cta-inner .section-desc { max-width: 500px; margin: 0 auto 48px; }
+.cta-form { display: flex; gap: 12px; max-width: 500px; margin: 0 auto; }
+.cta-form input {
+  flex: 1; padding: 16px 20px; background: var(--bg-card);
+  border: 1px solid var(--border-light); color: var(--fg);
+  font-family: var(--font-body); font-size: 15px; outline: none;
+  transition: border-color 0.3s;
+}
+.cta-form input:focus { border-color: var(--accent); }
+.cta-form input::placeholder { color: var(--fg-tertiary); }
+.cta-note { font-size: 13px; color: var(--fg-tertiary); margin-top: 16px; }
+
+/* BLOG */
+.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.blog-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 32px 28px; transition: border-color 0.3s, transform 0.3s;
+  display: flex; flex-direction: column; text-decoration: none; color: inherit;
+}
+.blog-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.blog-date {
+  font-family: var(--font-mono); font-size: 11px; color: var(--fg-tertiary);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+}
+.blog-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; color: var(--fg); }
+.blog-card p { color: var(--fg-secondary); font-size: 14px; line-height: 1.7; flex: 1; }
+.blog-tag {
+  display: inline-block; font-family: var(--font-mono); font-size: 10px;
+  color: var(--accent); background: var(--accent-dim);
+  border: 1px solid rgba(200,255,0,0.2); padding: 4px 10px;
+  text-transform: uppercase; letter-spacing: 0.5px; margin-top: 16px;
+  align-self: flex-start;
+}
+.blog-read-more {
+  font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+  margin-top: 16px; text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* FOOTER */
+footer { background: var(--bg-deep); border-top: 1px solid var(--border); }
+.footer-inner {
+  max-width: 1200px; margin: 0 auto; padding: 60px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p { font-size: 13px; color: var(--fg-tertiary); }
+footer .logo { font-size: 16px; }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 120px 20px 60px; }
+  .full-section-inner { padding: 80px 20px; }
+  .jobs-grid { grid-template-columns: 1fr; }
+  .case-card { grid-template-columns: 1fr; }
+  .case-results { flex-direction: row; gap: 32px; }
+  .case-result { text-align: left; min-width: auto; }
+  .product-row, .product-row.reverse { grid-template-columns: 1fr; direction: ltr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .team-card { grid-template-columns: 100px 1fr; gap: 20px; }
+  .team-photo { width: 100px; height: 100px; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .cta-form { flex-direction: column; }
+  .blog-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">RE<span>:</span>AI</div>
+  <div class="nav-links">
+    <a href="#problems">Проблемы</a>
+    <a href="#cases">Кейсы</a>
+    <a href="#products">Продукты</a>
+    <a href="#team">Команда</a>
+    <a href="#blog">Статьи</a>
+    <a href="#cta" class="nav-cta">Обсудить проект</a>
+  </div>
+</nav>
+
+<!-- HERO — deepest #0c0c0c -->
+<div class="full-section bg-deep">
+  <div class="hero">
+    <div class="hero-eyebrow">AI-консалтинг для рынка недвижимости</div>
+    <h1>Внедряем <em>AI</em> в компании недвижимости. Так, чтобы он <em>приносил деньги.</em></h1>
+    <p class="hero-sub">Мы помогаем девелоперам, агентствам и брокерам автоматизировать продажи, маркетинг и операции — без найма инхаус-команды и без года экспериментов.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">Обсудить задачу</a>
+      <a href="#cases" class="btn-secondary">Что мы уже сделали →</a>
+    </div>
+  </div>
+</div>
+
+<!-- JOBS — raised #181818 -->
+<div class="full-section bg-raised" id="problems">
+  <div class="full-section-inner">
+    <div class="section-label">Знакомо?</div>
+    <h2 class="section-title">С чем к нам приходят</h2>
+    <p class="section-desc">Каждый наш проект начинается с конкретной проблемы. Не «хотим AI» — а «хотим результат».</p>
+    <div class="jobs-grid">
+      <div class="job-card">
+        <div class="job-when">Проблема</div>
+        <div class="job-want">Входящие заявки обрабатываются часами — лиды остывают</div>
+        <div class="job-so-that">Клиент написал, а менеджер ответил через 4 часа. К этому моменту клиент уже общается с конкурентом.</div>
+        <div class="job-solution"><span>→</span> AI SDR + автоквалификация</div>
+      </div>
+      <div class="job-card">
+        <div class="job-when">Проблема</div>
+        <div class="job-want">Отчёт по продажам собирается неделю</div>
+        <div class="job-so-that">Аналитик вручную тянет данные из CRM, считает в Excel, верстает презентацию. Решения принимаются на устаревших цифрах.</div>
+        <div class="job-solution"><span>→</span> Управленческая AI-отчётность</div>
+      </div>
+      <div class="job-card">
+        <div class="job-when">Проблема</div>
+        <div class="job-want">Команда не умеет работать с AI</div>
+        <div class="job-so-that">Все слышали про ChatGPT, но никто не знает, как применить его к своим задачам. AI остаётся игрушкой, а не инструментом.</div>
+        <div class="job-solution"><span>→</span> Обучающий курс RE Academy</div>
+      </div>
+      <div class="job-card">
+        <div class="job-when">Проблема</div>
+        <div class="job-want">AI держится на одном человеке</div>
+        <div class="job-so-that">Промпты в личных чатах, воркфлоу в голове у одного сотрудника. Уйдёт — и всё рассыпется.</div>
+        <div class="job-solution"><span>→</span> База знаний + система промптов</div>
+      </div>
+      <div class="job-card">
+        <div class="job-when">Проблема</div>
+        <div class="job-want">Контент для объектов создаётся днями</div>
+        <div class="job-so-that">Описание, рассылка, SEO-текст — всё вручную. Новый объект ждёт маркетинга, пока конкуренты уже продают.</div>
+        <div class="job-solution"><span>→</span> AI-корректор + контент-генератор</div>
+      </div>
+      <div class="job-card">
+        <div class="job-when">Проблема</div>
+        <div class="job-want">Нужно 100 лендингов, а ресурсов на 3</div>
+        <div class="job-so-that">Каждая посадочная — дизайнер, верстальщик, контент. Проекты стоят в очереди неделями.</div>
+        <div class="job-solution"><span>→</span> Генератор посадочных страниц</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASES — base #121212 -->
+<div class="full-section bg-base" id="cases">
+  <div class="full-section-inner">
+    <div class="section-label">Кейсы</div>
+    <h2 class="section-title">Не концепты — работающие внедрения</h2>
+    <p class="section-desc">Каждый кейс — реальная проблема, которую мы решили. Вот что получилось.</p>
+
+    <div class="case-card">
+      <div>
+        <div class="case-tag">AI SDR · Международное агентство</div>
+        <h3>«Мы теряли лиды, потому что отвечали через 4 часа. Теперь — за 30 секунд»</h3>
+        <p>Компания работает на 5 рынках, входящие заявки приходят круглосуточно. Внедрили AI SDR: система квалифицирует лид, отвечает на базовые вопросы, назначает встречу — менеджер получает готового тёплого клиента.</p>
+      </div>
+      <div class="case-results">
+        <div class="case-result"><div class="num">×3</div><div class="label">Конверсия в ответ</div></div>
+        <div class="case-result"><div class="num">−60%</div><div class="label">Нагрузка на менеджеров</div></div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div>
+        <div class="case-tag">База знаний · Брокерская компания</div>
+        <h3>«У нас было 50 промптов в личных чатах. Теперь — единая система для всех»</h3>
+        <p>Развернули корпоративную базу знаний: структурированные промпты для продаж, маркетинга, аналитики и контента. Новые сотрудники выходят на скорость в 3 раза быстрее.</p>
+      </div>
+      <div class="case-results">
+        <div class="case-result"><div class="num">×3</div><div class="label">Скорость онбординга</div></div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div>
+        <div class="case-tag">Генератор лендингов · Агентство зарубежной недвижимости</div>
+        <h3>«93 проекта в Таиланде — и у каждого теперь своя посадочная страница»</h3>
+        <p>Построили генератор, который берёт данные проекта из JSON и выдаёт готовую страницу за минуты. Деплой — автоматический. Ноль часов ручной вёрстки.</p>
+      </div>
+      <div class="case-results">
+        <div class="case-result"><div class="num">93</div><div class="label">Страницы за 1 спринт</div></div>
+        <div class="case-result"><div class="num">0</div><div class="label">Часов ручной вёрстки</div></div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div>
+        <div class="case-tag">Обучение · Международная компания</div>
+        <h3>«Команда боялась AI. Через неделю — используют каждый день»</h3>
+        <p>Курс по AI для сотрудников: конкретные задачи из их рабочего дня, промпты под их процессы, воркшопы с обратной связью.</p>
+      </div>
+      <div class="case-results">
+        <div class="case-result"><div class="num">85%</div><div class="label">Используют AI ежедневно</div></div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div>
+        <div class="case-tag">Контент · Контент-команда девелопера</div>
+        <h3>«Редактор проверяет 40 текстов в неделю. Раньше на это уходило 20 часов»</h3>
+        <p>AI-корректор работает по стайлгайду компании: проверяет тон, терминологию, SEO и фактические ошибки.</p>
+      </div>
+      <div class="case-results">
+        <div class="case-result"><div class="num">−70%</div><div class="label">Времени на редактуру</div></div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div>
+        <div class="case-tag">Система промптов · Управляющая компания</div>
+        <h3>«AI-инфраструктура, которая не ломается, когда уходит тот, кто всё настраивал»</h3>
+        <p>Систематизировали процессы, создали библиотеку промптов, задокументировали воркфлоу — теперь это часть операционной системы компании.</p>
+      </div>
+      <div class="case-results">
+        <div class="case-result"><div class="num">Bus factor</div><div class="label">С 1 до ∞</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MANIFESTO — elevated #252525 -->
+<div class="full-section bg-elevated">
+  <div class="full-section-inner">
+    <div class="section-label">Наш подход</div>
+    <div class="manifesto-text">
+      <p>Мы не продаём «AI-трансформацию». <strong>Мы решаем конкретные задачи.</strong></p>
+      <br>
+      <p>Каждый проект начинается с вопроса: <em>«Что конкретно у вас не работает?»</em></p>
+      <br>
+      <p>Не «давайте внедрим ChatGPT» — а «давайте сделаем так, чтобы менеджер тратил на отчёт 15 минут вместо трёх дней».</p>
+      <br>
+      <p>Мы сами работаем в недвижимости. <strong>Каждое решение, которое мы предлагаем клиентам — мы уже запустили у себя.</strong> Это не теория. Это наш рабочий стек.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS — raised #181818 -->
+<div class="full-section bg-raised" id="products">
+  <div class="full-section-inner">
+    <div class="section-label">Продукты</div>
+    <h2 class="section-title">Готовые решения — можно запустить, не дожидаясь консалтинга</h2>
+    <p class="section-desc">Иногда не нужен полный аудит. Нужен инструмент, который решает задачу прямо сейчас.</p>
+
+    <div class="product-row">
+      <div>
+        <div class="product-label">Платформа</div>
+        <h3>Портал дистресс-сделок</h3>
+        <div class="product-job">«Нужно быстро находить и презентовать объекты с дисконтом — пока их не забрали»</div>
+        <p>Платформа для работы с дистресс-активами в недвижимости: агрегация объектов, AI-оценка потенциала, автоматическое обогащение данных и подбор под критерии инвестора.</p>
+        <div class="product-features">
+          <span class="product-feature">Агрегация</span>
+          <span class="product-feature">AI-оценка</span>
+          <span class="product-feature">Фильтры</span>
+          <span class="product-feature">Алерты</span>
+        </div>
+      </div>
+      <div class="product-visual">[скриншот портала]</div>
+    </div>
+
+    <div class="product-row reverse">
+      <div>
+        <div class="product-label">Обучение</div>
+        <h3>RE Academy</h3>
+        <div class="product-job">«Хочу, чтобы команда реально использовала AI, а не просто знала, что он существует»</div>
+        <p>Практический курс по AI для команд недвижимости. Пошаговые гайды, промпты под реальные задачи, воркшопы.</p>
+        <div class="product-features">
+          <span class="product-feature">Видео-уроки</span>
+          <span class="product-feature">Промпт-библиотека</span>
+          <span class="product-feature">Воркшопы</span>
+          <span class="product-feature">Сообщество</span>
+        </div>
+      </div>
+      <div class="product-visual">[скриншот курса]</div>
+    </div>
+
+    <div class="product-row">
+      <div>
+        <div class="product-label">Инструмент</div>
+        <h3>AI SDR Module</h3>
+        <div class="product-job">«Лидов много, менеджеры не вывозят — нужна автоматика на первой линии»</div>
+        <p>Модуль AI-квалификации: подключается к CRM, отвечает на заявки за секунды, квалифицирует по скорингу, назначает встречи.</p>
+        <div class="product-features">
+          <span class="product-feature">CRM-интеграция</span>
+          <span class="product-feature">Мультиязычность</span>
+          <span class="product-feature">Скоринг</span>
+          <span class="product-feature">Авто-назначение</span>
+        </div>
+      </div>
+      <div class="product-visual">[скриншот SDR]</div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM — base #121212 -->
+<div class="full-section bg-base" id="team">
+  <div class="full-section-inner">
+    <div class="section-label">Команда</div>
+    <h2 class="section-title">Мы не консультанты. Мы делаем это каждый день у себя</h2>
+    <p class="section-desc">Два кофаундера, которые строят AI-инфраструктуру в недвижимости изнутри.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo">👤</div>
+        <div>
+          <h3>Евгений Богатенков</h3>
+          <div class="team-role">Co-founder · AI & Marketing</div>
+          <p class="team-bio">10+ лет в digital-маркетинге недвижимости. CMO международной компании на 5 рынках. Построил AI-инфраструктуру для маркетинга, продаж и аналитики: от генератора лендингов до AI-рассылок и системы промптов. Оркестратор — умеет переводить бизнес-задачи в AI-решения.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo">👤</div>
+        <div>
+          <h3>Кирилл Карманов</h3>
+          <div class="team-role">Co-founder · Product & Design</div>
+          <p class="team-bio">10+ лет в продуктовом UX/UI-дизайне. Серийный предприниматель: основал SwipeUp и линейку Shopify-приложений. Строит продукты на стыке дизайна и технологий — от интерфейсов AI-инструментов до платформ для работы с данными. Превращает сложные AI-решения в понятные продукты, которыми реально пользуются.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS — raised #181818 -->
+<div class="full-section bg-raised">
+  <div class="full-section-inner">
+    <div class="section-label">Как мы работаем</div>
+    <h2 class="section-title">Четыре шага от задачи до результата</h2>
+    <p class="section-desc">Мы не начинаем с технологий. Мы начинаем с вашей задачи.</p>
+    <div class="process-steps">
+      <div class="process-step">
+        <h3>Разбираемся в проблеме</h3>
+        <p>Смотрим ваши процессы: что занимает время, где теряются деньги, где AI даст максимальный эффект.</p>
+      </div>
+      <div class="process-step">
+        <h3>Проектируем решение</h3>
+        <p>Подбираем инструменты, рисуем архитектуру, считаем ROI. Без сюрпризов.</p>
+      </div>
+      <div class="process-step">
+        <h3>Запускаем и обучаем</h3>
+        <p>Настраиваем, интегрируем, тестируем. Обучаем команду — чтобы система работала без нас.</p>
+      </div>
+      <div class="process-step">
+        <h3>Измеряем и масштабируем</h3>
+        <p>Смотрим на метрики, оптимизируем, расширяем на новые процессы.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG — base #121212 -->
+<div class="full-section bg-base" id="blog">
+  <div class="full-section-inner">
+    <div class="section-label">Блог</div>
+    <h2 class="section-title">Статьи про AI в недвижимости</h2>
+    <p class="section-desc">Практические гайды, разборы кейсов и инструкции — без воды и маркетингового тумана.</p>
+    <div class="blog-grid">
+      <a href="/blog/ai-vnedreniye-agentstvo-nedvizhimosti.html" class="blog-card">
+        <div class="blog-date">Март 2026</div>
+        <h3>Как внедрить AI в агентство недвижимости: пошаговое руководство</h3>
+        <p>С чего начать, какие процессы автоматизировать первыми и как не потратить бюджет впустую. Опыт 10+ внедрений.</p>
+        <span class="blog-tag">Гайд</span>
+        <div class="blog-read-more">Читать →</div>
+      </a>
+      <a href="/blog/ai-sdr-nedvizhimost.html" class="blog-card">
+        <div class="blog-date">Март 2026</div>
+        <h3>AI SDR для недвижимости: как автоматизировать первую линию продаж</h3>
+        <p>Что такое AI SDR, как он квалифицирует лиды и почему время ответа — главная метрика в продажах недвижимости.</p>
+        <span class="blog-tag">Продукт</span>
+        <div class="blog-read-more">Читать →</div>
+      </a>
+      <a href="/blog/chatgpt-dlya-developerov.html" class="blog-card">
+        <div class="blog-date">Март 2026</div>
+        <h3>ChatGPT для девелоперов: 10 способов использования в 2026 году</h3>
+        <p>От генерации описаний объектов до аналитики рынка — конкретные промпты и воркфлоу для девелоперских компаний.</p>
+        <span class="blog-tag">Практика</span>
+        <div class="blog-read-more">Читать →</div>
+      </a>
+      <a href="/blog/avtomatizatsiya-marketinga-nedvizhimosti.html" class="blog-card">
+        <div class="blog-date">Март 2026</div>
+        <h3>Автоматизация маркетинга недвижимости с помощью AI</h3>
+        <p>Рассылки, лендинги, SEO-тексты, соцсети — как AI ускоряет маркетинг в 3-5 раз без потери качества.</p>
+        <span class="blog-tag">Маркетинг</span>
+        <div class="blog-read-more">Читать →</div>
+      </a>
+      <a href="/blog/roi-ai-nedvizhimost.html" class="blog-card">
+        <div class="blog-date">Март 2026</div>
+        <h3>ROI от внедрения AI в недвижимости: считаем на реальных цифрах</h3>
+        <p>Сколько стоит внедрение, когда окупается и какие метрики отслеживать. Разбор на примере трёх компаний.</p>
+        <span class="blog-tag">Аналитика</span>
+        <div class="blog-read-more">Читать →</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA — deep #0c0c0c -->
+<div class="full-section bg-deep" id="cta">
+  <div class="full-section-inner cta-inner">
+    <div class="section-label">Начать</div>
+    <h2 class="section-title">Расскажите, что хотите автоматизировать — мы покажем, как</h2>
+    <p class="section-desc">30-минутный звонок. Разберём ваши процессы и покажем, где AI даст результат уже в первый месяц.</p>
+    <div class="cta-form">
+      <input type="email" placeholder="Ваш email или Telegram">
+      <button class="btn-primary" style="white-space: nowrap;">Обсудить задачу</button>
+    </div>
+    <p class="cta-note">Или напишите напрямую: @reai_consult</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="logo">RE<span>:</span>AI</div>
+    <p>© 2026 RE:AI · Богатенков & Карманов · AI-внедрения для рынка недвижимости</p>
+  </div>
+</footer>
+
+</body>
+</html>
