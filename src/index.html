@@ -770,34 +770,33 @@ footer .logo { font-size: 16px; }
 <script>
 async function submitLead(e) {
   e.preventDefault();
-  const name = document.getElementById('lead-name').value.trim();
-  const tg = document.getElementById('lead-tg').value.trim();
-  const phone = document.getElementById('lead-phone').value.trim();
-  const email = document.getElementById('lead-email').value.trim();
-  const status = document.getElementById('form-status');
-  const btn = e.target.querySelector('button');
+  var form = e.target;
+  var status = document.getElementById('form-status');
+  var btn = form.querySelector('button');
+  var name = form.querySelector('#lead-name').value.trim();
+  var tg = form.querySelector('#lead-tg').value.trim();
+  var phone = form.querySelector('#lead-phone').value.trim();
+  var email = form.querySelector('#lead-email').value.trim();
   if (!name || !tg || !phone) return false;
   btn.textContent = 'Отправка...';
   btn.disabled = true;
+  status.style.display = 'block';
+  status.style.color = 'var(--accent)';
   try {
-    const res = await fetch('/api/lead', {
+    var r = await fetch('/api/lead', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({name, tg, phone, email})
+      body: JSON.stringify({name: name, tg: tg, phone: phone, email: email})
     });
-    status.style.display = 'block';
-    if (res.ok) {
-      status.style.color = 'var(--accent)';
+    var txt = await r.text();
+    if (r.ok) {
       status.textContent = 'Спасибо! Мы свяжемся с вами.';
-      e.target.reset();
+      form.reset();
     } else {
-      status.style.color = 'var(--accent)';
-      status.textContent = 'Что-то пошло не так. Напишите нам в Telegram: @bogatenkov_e';
+      status.textContent = 'Ошибка ' + r.status + ': ' + txt;
     }
   } catch(err) {
-    status.style.display = 'block';
-    status.style.color = 'var(--accent)';
-    status.textContent = 'Что-то пошло не так. Напишите нам в Telegram: @bogatenkov_e';
+    status.textContent = 'Fetch error: ' + err.message;
   }
   btn.textContent = 'Обсудить задачу';
   btn.disabled = false;
