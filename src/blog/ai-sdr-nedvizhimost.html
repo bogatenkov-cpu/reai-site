@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI SDR для недвижимости: как автоматизировать первую линию продаж | RE:AI</title>
+<meta name="description" content="Что такое AI SDR для недвижимости, как он квалифицирует лиды за секунды, интегрируется с CRM и увеличивает конверсию в 3 раза. Реальный кейс, архитектура и план пилота за 2 недели.">
+<meta name="keywords" content="AI SDR недвижимость, автоматизация продаж недвижимости, AI квалификация лидов, чат-бот недвижимость, AI продажи недвижимость">
+<meta property="og:title" content="AI SDR для недвижимости: как автоматизировать первую линию продаж">
+<meta property="og:description" content="Что такое AI SDR, как он квалифицирует лиды и почему время ответа — главная метрика в продажах недвижимости. Реальный кейс: ×3 конверсия.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://reai-site.vercel.app/blog/ai-sdr-nedvizhimost.html">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://reai-site.vercel.app/blog/ai-sdr-nedvizhimost.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI SDR для недвижимости: как автоматизировать первую линию продаж",
+  "description": "Что такое AI SDR для недвижимости, как он квалифицирует лиды за секунды и увеличивает конверсию в 3 раза. Реальный кейс, архитектура и план пилота.",
+  "author": {
+    "@type": "Person",
+    "name": "Евгений Богатенков",
+    "jobTitle": "Co-founder, AI & Marketing",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "RE:AI"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "RE:AI",
+    "url": "https://reai-site.vercel.app"
+  },
+  "datePublished": "2026-03-25",
+  "dateModified": "2026-03-25",
+  "mainEntityOfPage": "https://reai-site.vercel.app/blog/ai-sdr-nedvizhimost.html",
+  "keywords": ["AI SDR", "недвижимость", "автоматизация продаж", "квалификация лидов", "CRM интеграция"],
+  "articleSection": "AI в недвижимости",
+  "wordCount": 2200,
+  "inLanguage": "ru"
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0c0c0c;
+  --bg: #121212;
+  --bg-raised: #181818;
+  --bg-card: #1e1e1e;
+  --bg-elevated: #252525;
+  --fg: #eeebe4;
+  --fg-secondary: #ccc8bf;
+  --fg-tertiary: #9e9a92;
+  --accent: #c8ff00;
+  --accent-dim: rgba(200,255,0,0.15);
+  --border: #2c2c2c;
+  --border-light: #353535;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  padding: 20px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  backdrop-filter: blur(20px);
+  background: rgba(12,12,12,0.88);
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-family: var(--font-mono); font-size: 20px; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: var(--fg); }
+.logo span { color: var(--accent); }
+nav a { color: var(--fg-tertiary); text-decoration: none; font-size: 14px; font-family: var(--font-mono); transition: color 0.3s; }
+nav a:hover { color: var(--fg); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-cta {
+  background: var(--accent); color: var(--bg-deep) !important;
+  padding: 10px 24px; font-weight: 700; font-size: 13px;
+  text-transform: uppercase; letter-spacing: 1px; border: none;
+  cursor: pointer; font-family: var(--font-mono); text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(200,255,0,0.3); color: var(--bg-deep) !important; }
+
+/* BREADCRUMBS */
+.breadcrumbs {
+  max-width: 800px; margin: 0 auto;
+  padding: 100px 40px 0;
+  font-family: var(--font-mono); font-size: 12px;
+}
+.breadcrumbs a { color: var(--fg-tertiary); text-decoration: none; transition: color 0.3s; }
+.breadcrumbs a:hover { color: var(--accent); }
+.breadcrumbs .sep { color: var(--fg-tertiary); margin: 0 8px; }
+.breadcrumbs .current { color: var(--fg-secondary); }
+
+/* ARTICLE */
+.article-header {
+  max-width: 800px; margin: 0 auto;
+  padding: 48px 40px 0;
+}
+.article-meta {
+  display: flex; gap: 24px; align-items: center;
+  margin-bottom: 24px;
+}
+.article-date {
+  font-family: var(--font-mono); font-size: 12px; color: var(--fg-tertiary);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.article-tag {
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--accent); background: var(--accent-dim);
+  border: 1px solid rgba(200,255,0,0.2); padding: 4px 10px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.article-header h1 {
+  font-family: var(--font-display); font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.1; font-weight: 400; margin-bottom: 24px;
+}
+.article-header h1 em { font-style: italic; color: var(--accent); }
+.article-lead {
+  font-size: 20px; color: var(--fg-secondary); line-height: 1.7;
+  margin-bottom: 48px; max-width: 700px;
+}
+
+.article-body {
+  max-width: 800px; margin: 0 auto;
+  padding: 0 40px 80px;
+}
+.article-body h2 {
+  font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 38px);
+  line-height: 1.15; font-weight: 400; margin: 64px 0 24px;
+  padding-top: 32px; border-top: 1px solid var(--border);
+}
+.article-body h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+.article-body h3 {
+  font-size: 20px; font-weight: 600; margin: 40px 0 16px; color: var(--fg);
+}
+.article-body p {
+  color: var(--fg-secondary); font-size: 17px; line-height: 1.8;
+  margin-bottom: 20px;
+}
+.article-body strong { color: var(--fg); font-weight: 600; }
+.article-body em { color: var(--accent); font-style: normal; }
+
+.article-body ul, .article-body ol {
+  color: var(--fg-secondary); font-size: 17px; line-height: 1.8;
+  margin-bottom: 20px; padding-left: 24px;
+}
+.article-body li { margin-bottom: 8px; }
+.article-body li strong { color: var(--fg); }
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 28px 32px; margin: 32px 0;
+}
+.highlight-box p { color: var(--fg-secondary); margin-bottom: 8px; }
+.highlight-box p:last-child { margin-bottom: 0; }
+.highlight-box strong { color: var(--fg); }
+
+/* STAT GRID */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  margin: 32px 0;
+}
+.stat-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 24px; text-align: center;
+}
+.stat-num {
+  font-family: var(--font-mono); font-size: 32px; font-weight: 700;
+  color: var(--accent); line-height: 1; margin-bottom: 8px;
+}
+.stat-label { font-size: 13px; color: var(--fg-tertiary); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* CASE BOX */
+.case-box {
+  background: var(--bg-raised); border: 1px solid var(--border);
+  padding: 40px; margin: 40px 0;
+}
+.case-box-label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px;
+}
+.case-box h3 { font-size: 22px; font-weight: 600; margin-bottom: 16px; color: var(--fg); }
+.case-box p { color: var(--fg-secondary); font-size: 16px; line-height: 1.7; margin-bottom: 12px; }
+.case-box-results {
+  display: flex; gap: 40px; margin-top: 24px;
+  padding-top: 20px; border-top: 1px solid var(--border);
+}
+.case-box-result .num {
+  font-family: var(--font-mono); font-size: 28px; font-weight: 700;
+  color: var(--accent); line-height: 1;
+}
+.case-box-result .label {
+  font-size: 12px; color: var(--fg-tertiary); text-transform: uppercase;
+  letter-spacing: 0.5px; margin-top: 4px;
+}
+
+/* COMPARISON TABLE */
+.comparison-table {
+  width: 100%; border-collapse: collapse; margin: 32px 0;
+  font-size: 15px;
+}
+.comparison-table th {
+  text-align: left; padding: 14px 16px;
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--accent); background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+.comparison-table td {
+  padding: 14px 16px; color: var(--fg-secondary);
+  border: 1px solid var(--border); background: var(--bg-deep);
+  line-height: 1.5;
+}
+.comparison-table tr td:first-child { color: var(--fg); font-weight: 500; }
+
+/* STEPS LIST */
+.steps-list {
+  counter-reset: steps; list-style: none; padding-left: 0;
+  margin: 32px 0;
+}
+.steps-list li {
+  counter-increment: steps; position: relative;
+  padding: 20px 24px 20px 72px; margin-bottom: 12px;
+  background: var(--bg-card); border: 1px solid var(--border);
+}
+.steps-list li::before {
+  content: counter(steps, decimal-leading-zero);
+  position: absolute; left: 20px; top: 20px;
+  font-family: var(--font-mono); font-size: 20px; font-weight: 700;
+  color: rgba(200,255,0,0.3);
+}
+.steps-list li strong { color: var(--fg); display: block; margin-bottom: 4px; }
+.steps-list li span { color: var(--fg-secondary); font-size: 15px; }
+
+/* ARTICLE CTA */
+.article-cta {
+  background: var(--bg-raised); border: 1px solid var(--border);
+  padding: 48px; margin: 64px 0 0; text-align: center;
+}
+.article-cta h2 {
+  font-family: var(--font-display); font-size: 32px; font-weight: 400;
+  margin: 0 0 16px; border: none; padding: 0;
+}
+.article-cta p { color: var(--fg-secondary); font-size: 17px; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.btn-primary {
+  background: var(--accent); color: var(--bg-deep);
+  padding: 16px 40px; font-weight: 700; font-size: 15px;
+  text-transform: uppercase; letter-spacing: 1px; border: none;
+  cursor: pointer; font-family: var(--font-mono);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none; display: inline-block;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(200,255,0,0.3); }
+
+/* FOOTER */
+footer { background: var(--bg-deep); border-top: 1px solid var(--border); }
+.footer-inner {
+  max-width: 1200px; margin: 0 auto; padding: 60px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p { font-size: 13px; color: var(--fg-tertiary); }
+footer .logo { font-size: 16px; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .breadcrumbs { padding: 100px 20px 0; }
+  .article-header { padding: 32px 20px 0; }
+  .article-body { padding: 0 20px 60px; }
+  .article-meta { flex-wrap: wrap; gap: 12px; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .case-box { padding: 24px; }
+  .case-box-results { flex-direction: column; gap: 16px; }
+  .comparison-table { font-size: 13px; }
+  .comparison-table th, .comparison-table td { padding: 10px 12px; }
+  .article-cta { padding: 32px 20px; }
+  .footer-inner { flex-direction: column; gap: 16px; text-align: center; padding: 40px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">RE<span>:</span>AI</a>
+  <div class="nav-links">
+    <a href="/#problems">Проблемы</a>
+    <a href="/#cases">Кейсы</a>
+    <a href="/#products">Продукты</a>
+    <a href="/#team">Команда</a>
+    <a href="/#blog">Статьи</a>
+    <a href="/#cta" class="nav-cta">Обсудить проект</a>
+  </div>
+</nav>
+
+<div class="breadcrumbs">
+  <a href="/">RE:AI</a>
+  <span class="sep">/</span>
+  <a href="/#blog">Блог</a>
+  <span class="sep">/</span>
+  <span class="current">AI SDR для недвижимости</span>
+</div>
+
+<header class="article-header">
+  <div class="article-meta">
+    <span class="article-date">25 марта 2026</span>
+    <span class="article-tag">Продукт</span>
+  </div>
+  <h1>AI SDR для недвижимости: как автоматизировать <em>первую линию продаж</em></h1>
+  <p class="article-lead">Клиент оставил заявку на сайте. Через 4 часа менеджер написал ему в WhatsApp. Клиент уже общается с конкурентом. Знакомо? Разбираем, как AI SDR решает эту проблему и почему это не очередной чат-бот.</p>
+</header>
+
+<article class="article-body">
+
+  <h2>Что такое AI SDR и чем он отличается от чат-бота</h2>
+
+  <p>SDR — Sales Development Representative. Это человек, который обрабатывает входящие заявки: отвечает на первые вопросы, квалифицирует лид, назначает встречу с менеджером. В большинстве агентств недвижимости эту роль выполняет сам менеджер по продажам. Параллельно с показами, звонками и подготовкой документов.</p>
+
+  <p>AI SDR — это система, которая берёт на себя эту первую линию. Но между AI SDR и чат-ботом — пропасть.</p>
+
+  <table class="comparison-table">
+    <tr>
+      <th>Параметр</th>
+      <th>Чат-бот</th>
+      <th>AI SDR</th>
+    </tr>
+    <tr>
+      <td>Логика</td>
+      <td>Жёсткие сценарии, кнопки, дерево ответов</td>
+      <td>LLM: понимает контекст, ведёт живой диалог</td>
+    </tr>
+    <tr>
+      <td>Квалификация</td>
+      <td>Нет или примитивная (бюджет/город)</td>
+      <td>Многофакторный скоринг: бюджет, срочность, тип сделки, история</td>
+    </tr>
+    <tr>
+      <td>Маршрутизация</td>
+      <td>Все заявки в одну кучу</td>
+      <td>Горячий лид — к senior-менеджеру, холодный — в nurturing</td>
+    </tr>
+    <tr>
+      <td>Тон</td>
+      <td>Роботизированный</td>
+      <td>Настраивается: от формального до дружеского</td>
+    </tr>
+    <tr>
+      <td>База знаний</td>
+      <td>Фиксированные FAQ</td>
+      <td>Актуальные данные по объектам, ценам, условиям</td>
+    </tr>
+    <tr>
+      <td>Интеграция</td>
+      <td>Часто standalone</td>
+      <td>CRM, мессенджеры, календарь, аналитика</td>
+    </tr>
+  </table>
+
+  <p>Чат-бот — это дерево решений. AI SDR — это сотрудник, который понимает, что ему говорят, знает продукт и умеет довести клиента до встречи. Разница — как между автоответчиком и живым ассистентом.</p>
+
+  <p>Ключевой момент: <strong>AI SDR не заменяет менеджера по продажам</strong>. Он заменяет первые 5-15 минут диалога — ту часть, где 80% времени тратится на повторяющиеся вопросы и базовую квалификацию. Менеджер получает уже подготовленного клиента с заполненной карточкой.</p>
+
+  <h2>Почему время ответа — главная метрика в продажах недвижимости</h2>
+
+  <p>В продажах недвижимости есть одна переменная, которая влияет на конверсию сильнее всего: <strong>скорость первого ответа</strong>. Не качество сайта, не цена, не даже локация объекта — а то, как быстро вы написали клиенту после заявки.</p>
+
+  <div class="stat-grid">
+    <div class="stat-item">
+      <div class="stat-num">78%</div>
+      <div class="stat-label">покупают у того, кто ответил первым</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5 мин</div>
+      <div class="stat-label">критическое окно ответа на заявку</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">×10</div>
+      <div class="stat-label">падение конверсии после 30 минут ожидания</div>
+    </div>
+  </div>
+
+  <p>Исследование InsideSales.com (теперь XANT) показало: <strong>если вы отвечаете на лид в первые 5 минут, вероятность квалификации в 21 раз выше</strong>, чем при ответе через 30 минут. Для недвижимости эта закономерность ещё жёстче, потому что клиент обычно отправляет заявки в 3-5 компаний одновременно.</p>
+
+  <p>Вот реальная картина типичного агентства:</p>
+
+  <ul>
+    <li>Заявки с сайта приходят круглосуточно — клиенты ищут недвижимость вечером и в выходные</li>
+    <li>Менеджеры отвечают в рабочее время, среднее время реакции — <strong>2-4 часа</strong></li>
+    <li>На международных рынках добавляется проблема часовых поясов</li>
+    <li>В пиковые периоды (новый проект, акция) менеджеры физически не успевают обработать все заявки</li>
+  </ul>
+
+  <p>AI SDR отвечает за <strong>30 секунд</strong>. Всегда. В 3 часа ночи, в воскресенье, на 5 языках одновременно. Это не преимущество — это базовое условие конкурентоспособности в 2026 году.</p>
+
+  <div class="highlight-box">
+    <p><strong>Цифра из нашей практики:</strong> одно только сокращение времени ответа с 3 часов до 30 секунд увеличило конверсию из заявки во встречу в 3 раза. Без изменений в продукте, ценах или маркетинге.</p>
+  </div>
+
+  <h2>Как работает AI SDR: квалификация, скоринг, маршрутизация</h2>
+
+  <p>AI SDR — это не одна технология, а связка из нескольких компонентов. Вот как выглядит типичная архитектура.</p>
+
+  <h3>1. Приём заявки</h3>
+
+  <p>Система подключается ко всем каналам: форма на сайте, WhatsApp, Telegram, Instagram Direct, email. Заявка попадает в единую очередь. Не имеет значения, откуда написал клиент — AI SDR отвечает в том же канале, в том же тоне.</p>
+
+  <h3>2. Первый контакт</h3>
+
+  <p>В течение 30 секунд клиент получает персонализированный ответ. Не шаблон «Спасибо за заявку, менеджер свяжется с вами» — а содержательное сообщение. Если клиент спросил про конкретный объект, AI SDR ответит по этому объекту: цена, площадь, этап строительства, условия оплаты.</p>
+
+  <p>AI SDR работает на базе языковой модели (GPT-4o, Claude или аналоги), но с жёсткими guardrails:</p>
+
+  <ul>
+    <li><strong>Только проверенные данные</strong> — система не выдумывает цены и характеристики, а берёт их из базы</li>
+    <li><strong>Чёткие границы</strong> — AI SDR не обсуждает юридические вопросы, не даёт финансовых гарантий, не обещает скидки</li>
+    <li><strong>Стоп-слова</strong> — при определённых триггерах диалог мгновенно передаётся человеку</li>
+  </ul>
+
+  <h3>3. Квалификация и скоринг</h3>
+
+  <p>В ходе диалога AI SDR собирает информацию по заранее заданным критериям. Для недвижимости это обычно:</p>
+
+  <ul>
+    <li><strong>Бюджет</strong> — диапазон, готовность к покупке</li>
+    <li><strong>Срочность</strong> — когда планирует покупку</li>
+    <li><strong>Тип запроса</strong> — инвестиция, для жизни, бизнес</li>
+    <li><strong>Локация</strong> — город, район, конкретный проект</li>
+    <li><strong>Стадия принятия решения</strong> — изучает рынок, сравнивает варианты, готов к сделке</li>
+    <li><strong>Источник</strong> — откуда узнал, есть ли опыт покупки</li>
+  </ul>
+
+  <p>На основании этих данных система присваивает лиду скоринг — числовую оценку. Горячий лид (высокий бюджет, срочность, конкретный запрос) получает высокий балл. Холодный (без бюджета, «просто интересуюсь») — низкий.</p>
+
+  <h3>4. Маршрутизация</h3>
+
+  <p>Здесь начинается реальная ценность. Вместо того чтобы все заявки падали в общую очередь, AI SDR распределяет их:</p>
+
+  <ul>
+    <li><strong>Горячие лиды (80+ баллов)</strong> — мгновенное уведомление senior-менеджеру, автоматическое предложение слотов для встречи</li>
+    <li><strong>Тёплые лиды (50-80 баллов)</strong> — передача менеджеру с заполненной карточкой и рекомендацией объектов</li>
+    <li><strong>Холодные лиды (до 50 баллов)</strong> — автоматический nurturing: серия полезных сообщений, подборка объектов, приглашение на вебинар</li>
+    <li><strong>Нецелевые</strong> — вежливый ответ и завершение диалога, без траты времени менеджера</li>
+  </ul>
+
+  <div class="highlight-box">
+    <p><strong>Результат:</strong> менеджер по продажам тратит время только на квалифицированных клиентов. Не на тех, кто «просто спросить». Не на спам. Не на заявки, где бюджет в 5 раз ниже минимального порога.</p>
+  </div>
+
+  <h3>5. Передача менеджеру</h3>
+
+  <p>Когда AI SDR передаёт лид, менеджер получает не просто имя и телефон. Он получает:</p>
+
+  <ul>
+    <li>Краткую сводку диалога</li>
+    <li>Заполненную карточку с квалификацией</li>
+    <li>Скоринг и рекомендацию действий</li>
+    <li>Предложенные объекты, которые обсуждались</li>
+    <li>Назначенное время встречи (если клиент выбрал слот)</li>
+  </ul>
+
+  <p>Менеджер открывает CRM — и видит полную картину. Без повторных вопросов клиенту. Без потери контекста.</p>
+
+  <h2>Реальный кейс: международное агентство, ×3 конверсия</h2>
+
+  <div class="case-box">
+    <div class="case-box-label">Кейс · AI SDR · 5 рынков</div>
+    <h3>Международное агентство зарубежной недвижимости</h3>
+
+    <p><strong>Ситуация.</strong> Компания работает на 5 рынках: Таиланд, Бали, ОАЭ, Северный Кипр, Турция. Входящие заявки — сайт, Instagram, WhatsApp. Среднее время ответа — 3.5 часа. В выходные — до 12 часов. Менеджеры перегружены: 60% времени уходит на первичную обработку и повторяющиеся вопросы.</p>
+
+    <p><strong>Решение.</strong> Развернули AI SDR на базе GPT-4o с подключением к базе объектов (900+ проектов). Система работает на 3 языках (русский, английский, тайский). Интеграция: WhatsApp Business API, Telegram Bot, CRM (Bitrix24).</p>
+
+    <p><strong>Что делает AI SDR:</strong></p>
+    <ul style="color: var(--fg-secondary); padding-left: 24px; margin-bottom: 16px;">
+      <li>Отвечает на заявку за 20-30 секунд в любое время суток</li>
+      <li>Отвечает на вопросы по конкретным проектам: цены, планировки, условия</li>
+      <li>Квалифицирует по 6 параметрам и присваивает скоринг</li>
+      <li>Горячих клиентов передаёт менеджеру с полной карточкой</li>
+      <li>Холодным — отправляет подборку объектов и приглашение на вебинар</li>
+      <li>Назначает встречи и видеозвонки через интеграцию с календарём</li>
+    </ul>
+
+    <div class="case-box-results">
+      <div class="case-box-result">
+        <div class="num">×3</div>
+        <div class="label">Конверсия из заявки во встречу</div>
+      </div>
+      <div class="case-box-result">
+        <div class="num">-60%</div>
+        <div class="label">Нагрузка на менеджеров</div>
+      </div>
+      <div class="case-box-result">
+        <div class="num">30 сек</div>
+        <div class="label">Среднее время ответа</div>
+      </div>
+      <div class="case-box-result">
+        <div class="num">24/7</div>
+        <div class="label">Работа без выходных</div>
+      </div>
+    </div>
+  </div>
+
+  <p>Важная деталь: <strong>менеджеры не потеряли работу</strong>. Они стали продавать больше, потому что перестали тратить время на первичную обработку. Средний чек вырос на 15% — потому что менеджеры фокусируются на сложных сделках, а не разбирают очередь из 50 одинаковых вопросов про цены.</p>
+
+  <h2>Интеграция с CRM и мессенджерами</h2>
+
+  <p>AI SDR бесполезен, если он работает в вакууме. Вся ценность — в связке с существующей инфраструктурой.</p>
+
+  <h3>CRM</h3>
+
+  <p>AI SDR подключается к CRM компании и работает с ней в обе стороны:</p>
+
+  <ul>
+    <li><strong>Читает</strong> — актуальные данные по объектам, цены, наличие, условия. Если объект продан, AI SDR об этом знает</li>
+    <li><strong>Пишет</strong> — создаёт карточку лида, заполняет квалификацию, прикрепляет историю диалога, ставит задачу менеджеру</li>
+  </ul>
+
+  <p>Поддерживаемые CRM: Bitrix24, amoCRM, HubSpot, Salesforce, Pipedrive. Для нестандартных CRM — подключение через API.</p>
+
+  <h3>Мессенджеры</h3>
+
+  <p>В недвижимости мессенджеры — основной канал коммуникации. AI SDR работает там, где общается клиент:</p>
+
+  <ul>
+    <li><strong>WhatsApp Business API</strong> — официальная интеграция, без риска блокировки</li>
+    <li><strong>Telegram</strong> — бот с полной функциональностью</li>
+    <li><strong>Instagram Direct</strong> — ответы на сообщения из рекламы и профиля</li>
+    <li><strong>Виджет на сайте</strong> — чат, который можно стилизовать под сайт</li>
+    <li><strong>Email</strong> — для B2B-лидов и формальных запросов</li>
+  </ul>
+
+  <p>Критичный нюанс: <strong>диалог бесшовный</strong>. Если клиент начал переписку в Instagram, а продолжил в WhatsApp — AI SDR знает контекст. Вся история в одной карточке в CRM.</p>
+
+  <h3>Календарь и встречи</h3>
+
+  <p>AI SDR умеет назначать встречи. Система подключается к Google Calendar или Calendly менеджера, видит свободные слоты и предлагает их клиенту. Клиент выбирает время — менеджер получает уведомление с полной карточкой.</p>
+
+  <p>Для международных компаний: автоматический учёт часовых поясов. Клиент из Москвы видит время по МСК, менеджер в Таиланде — по Бангкоку.</p>
+
+  <h2>Когда AI SDR не подойдёт</h2>
+
+  <p>AI SDR — не серебряная пуля. Есть ситуации, где он не сработает или будет преждевременным.</p>
+
+  <p><strong>Мало лидов.</strong> Если в месяц приходит 10-20 заявок, менеджер справится сам. AI SDR окупается при потоке от 50-100+ заявок в месяц. Ниже этого порога — проще нанять ассистента.</p>
+
+  <p><strong>Нет базы знаний.</strong> AI SDR работает с данными. Если у вас нет структурированной информации по объектам (цены, характеристики, условия) — сначала нужно навести порядок в данных. Иначе AI будет давать неполные или неточные ответы.</p>
+
+  <p><strong>Все сделки — сложные и уникальные.</strong> Если каждая сделка — это месяц переговоров с юристами и уникальными условиями (премиум-сегмент, коммерческая недвижимость крупного формата) — AI SDR может обработать первый контакт, но его ценность будет ниже. Здесь важнее личный контакт с первого сообщения.</p>
+
+  <p><strong>Команда не готова.</strong> AI SDR создаёт новый процесс: менеджеры получают квалифицированные лиды с карточками, должны реагировать быстро. Если команда привыкла отвечать «когда смогу» — технология не поможет. Сначала — процессы, потом — автоматизация.</p>
+
+  <p><strong>Нет CRM.</strong> AI SDR без CRM — это AI SDR, который пишет в пустоту. Данные должны куда-то попадать. Если вы ведёте клиентов в Excel-таблице — начните с внедрения CRM.</p>
+
+  <div class="highlight-box">
+    <p><strong>Честное правило:</strong> если вы не можете описать свой процесс продаж на одной странице — вам рано внедрять AI SDR. Сначала процесс, потом автоматизация.</p>
+  </div>
+
+  <h2>Как начать: пилот за 2 недели</h2>
+
+  <p>Мы не верим в проекты, которые тянутся месяцами. AI SDR можно запустить в пилотном режиме за 2 недели. Вот как это выглядит.</p>
+
+  <ol class="steps-list">
+    <li>
+      <strong>Неделя 0: Аудит (1-2 дня)</strong>
+      <span>Анализируем текущий процесс обработки заявок. Смотрим CRM, каналы, среднее время ответа, конверсию. Определяем, где AI SDR даст максимальный эффект. Формулируем критерии квалификации и правила скоринга.</span>
+    </li>
+    <li>
+      <strong>Неделя 1: Настройка и интеграция</strong>
+      <span>Подключаем AI SDR к одному каналу (обычно WhatsApp или виджет на сайте). Загружаем базу объектов. Настраиваем промпты, тон, guardrails. Интегрируем с CRM. Тестируем на внутренних сценариях.</span>
+    </li>
+    <li>
+      <strong>Неделя 2: Пилот на реальном трафике</strong>
+      <span>Направляем 30-50% входящих заявок на AI SDR. Менеджеры видят все диалоги, могут перехватить в любой момент. Собираем метрики: время ответа, конверсия в квалификацию, удовлетворённость клиентов.</span>
+    </li>
+    <li>
+      <strong>Неделя 3+: Масштабирование</strong>
+      <span>Если метрики пилота подтверждаются — подключаем остальные каналы и 100% трафика. Добавляем языки, сценарии, интеграции. Настраиваем дашборд аналитики.</span>
+    </li>
+  </ol>
+
+  <p><strong>Стоимость пилота</strong> зависит от сложности: количество языков, каналов, глубина интеграции с CRM. Типичный пилот для одного канала и одного языка — от 2-3 недель и умеренного бюджета. Окупается в первый месяц работы за счёт роста конверсии и экономии времени менеджеров.</p>
+
+  <p>Ключевой принцип: <strong>не внедрять всё сразу</strong>. Один канал, один рынок, 2 недели. Смотрим на цифры. Если работает — расширяем. Если нет — корректируем до результата или честно говорим, что в вашем случае AI SDR не нужен.</p>
+
+  <h3>Что нужно от вас для старта</h3>
+
+  <ul>
+    <li>Доступ к CRM (или готовность подключить)</li>
+    <li>Список объектов с ценами и характеристиками (хотя бы в Excel)</li>
+    <li>Описание процесса квалификации: какого клиента вы считаете «горячим»</li>
+    <li>Примеры реальных диалогов с клиентами (5-10 штук)</li>
+    <li>1-2 менеджера для обратной связи во время пилота</li>
+  </ul>
+
+  <p>Всё остальное — на нашей стороне. Мы не просто настраиваем инструмент. Мы проектируем процесс, обучаем команду и сопровождаем до результата.</p>
+
+  <div class="article-cta">
+    <h2>Хотите протестировать AI SDR на своих заявках?</h2>
+    <p>30-минутный разбор вашего процесса продаж. Покажем, где AI SDR даст максимальный эффект и посчитаем ROI на ваших цифрах.</p>
+    <a href="/#cta" class="btn-primary">Обсудить пилот</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="logo">RE<span>:</span>AI</a>
+    <p>&copy; 2026 RE:AI &middot; Богатенков & Карманов &middot; AI-внедрения для рынка недвижимости</p>
+  </div>
+</footer>
+
+</body>
+</html>
