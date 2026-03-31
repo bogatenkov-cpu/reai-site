@@ -58,7 +58,8 @@
   "foundingDate": "2025",
   "founder": [
     {"@type": "Person", "name": "Евгений Богатенков", "jobTitle": "Co-founder, AI & Marketing"},
-    {"@type": "Person", "name": "Кирилл Карманов", "jobTitle": "Co-founder, Product & Design"}
+    {"@type": "Person", "name": "Кирилл Карманов", "jobTitle": "Co-founder, Product & Design"},
+    {"@type": "Person", "name": "Анна Данишек", "jobTitle": "HRD, Content & Communication"}
   ],
   "areaServed": "Международный рынок недвижимости",
   "serviceType": ["AI-консалтинг", "Автоматизация продаж", "Обучение AI", "AI SDR"]
@@ -259,20 +260,18 @@ nav a:hover { color: var(--fg); }
 }
 
 /* TEAM */
-.team-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-.team-photo-shared {
-  width: 100%; border-radius: 12px; overflow: hidden;
-  border: 2px solid var(--border-light);
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.team-card { text-align: center; }
+.team-card img {
+  width: 160px; height: 160px; border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--border-light); margin-bottom: 20px;
 }
-.team-photo-shared img { width: 100%; height: auto; display: block; }
-.team-members { display: flex; flex-direction: column; gap: 40px; }
 .team-member h3 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
 .team-role {
   font-family: var(--font-mono); font-size: 12px; color: var(--accent);
   text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
 }
 .team-bio { color: var(--fg-secondary); font-size: 15px; line-height: 1.7; }
-.team-divider { border: none; border-top: 1px solid var(--border); }
 
 /* PROCESS */
 .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: step; }
@@ -355,7 +354,7 @@ footer .logo { font-size: 16px; }
   .case-results { flex-direction: row; gap: 32px; }
   .case-result { text-align: left; min-width: auto; }
   .product-row, .product-row.reverse { grid-template-columns: 1fr; direction: ltr; }
-  .team-layout { grid-template-columns: 1fr; gap: 40px; }
+  .team-grid { grid-template-columns: 1fr; gap: 40px; }
   .process-steps { grid-template-columns: 1fr 1fr; }
   .cta-form { flex-direction: column; }
   .blog-grid { grid-template-columns: 1fr; }
@@ -677,23 +676,31 @@ footer .logo { font-size: 16px; }
   <div class="full-section-inner">
     <div class="section-label">Команда</div>
     <h2 class="section-title">Мы не консультанты. Мы делаем это каждый день у себя</h2>
-    <p class="section-desc">Два кофаундера, которые строят AI-инфраструктуру в недвижимости изнутри.</p>
+    <p class="section-desc">Команда, которая строит AI-инфраструктуру в недвижимости изнутри.</p>
 
-    <div class="team-layout">
-      <div class="team-photo-shared">
-        <img src="/images/team-photo.jpeg" alt="Кирилл Карманов и Евгений Богатенков — кофаундеры RE:AI" loading="lazy">
-      </div>
-      <div class="team-members">
-        <div class="team-member">
-          <h3>Кирилл Карманов</h3>
-          <div class="team-role">Co-founder · Product & Design</div>
-          <p class="team-bio">10+ лет в продуктовом UX/UI-дизайне. Серийный предприниматель: основал SwipeUp и линейку Shopify-приложений. Строит продукты на стыке дизайна и технологий — от интерфейсов AI-инструментов до платформ для работы с данными. Превращает сложные AI-решения в понятные продукты, которыми реально пользуются.</p>
-        </div>
-        <hr class="team-divider">
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="/images/evgenii.jpg" alt="Евгений Богатенков — Co-founder RE:AI" loading="lazy">
         <div class="team-member">
           <h3>Евгений Богатенков</h3>
           <div class="team-role">Co-founder · AI & Marketing</div>
-          <p class="team-bio">10+ лет в digital-маркетинге недвижимости. CMO международной компании на 5 рынках. Построил AI-инфраструктуру для маркетинга, продаж и аналитики: от генератора лендингов до AI-рассылок и системы промптов. Оркестратор — умеет переводить бизнес-задачи в AI-решения.</p>
+          <p class="team-bio">10+ лет в digital-маркетинге недвижимости. CMO международной компании на 5 рынках. Построил AI-инфраструктуру для маркетинга, продаж и аналитики: от генератора лендингов до AI-рассылок и системы промптов. Переводит бизнес-задачи в AI-решения.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="/images/kirill.jpg" alt="Кирилл Карманов — Co-founder RE:AI" loading="lazy">
+        <div class="team-member">
+          <h3>Кирилл Карманов</h3>
+          <div class="team-role">Co-founder · Product & Design</div>
+          <p class="team-bio">10+ лет в продуктовом UX/UI-дизайне. Серийный предприниматель: основал SwipeUp и линейку Shopify-приложений. Строит продукты на стыке дизайна и технологий. Превращает сложные AI-решения в понятные продукты, которыми реально пользуются.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="/images/anna.jpg" alt="Анна — HRD RE:AI" loading="lazy">
+        <div class="team-member">
+          <h3>Анна Данишек</h3>
+          <div class="team-role">HRD · Content & Communication</div>
+          <p class="team-bio">10+ лет в зарубежной недвижимости. Эксперт по работе с текстами и коммуникациям. Сертифицированный бизнес-коуч. Выстраивает процессы внутри команды и отвечает за то, чтобы AI-решения были понятны людям — от документации до обучения.</p>
         </div>
       </div>
     </div>
